@@ -46,7 +46,7 @@ export default function ScanDialog({ isOpen, onClose, onScan }: ScanDialogProps)
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 className="col-span-3"
-                placeholder="e.g., user-2"
+                placeholder="e.g., U1S1"
                 required
               />
             </div>

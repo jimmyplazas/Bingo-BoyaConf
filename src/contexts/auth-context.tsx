@@ -19,7 +19,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // A mock user to simulate Google Sign-In
-const mockLoggedInUser = USERS['user-1'];
+const mockLoggedInUser = USERS['U1S1'];
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // For now, we'll just set a mock user.
     // Let's allow switching between a normal user and an admin user for testing.
     const currentUser = sessionStorage.getItem('bingo-user');
-    const targetUser = currentUser && JSON.parse(currentUser).uid === 'user-1' ? USERS['admin-1'] : USERS['user-1'];
+    const targetUser = currentUser && JSON.parse(currentUser).uid === 'U1S1' ? USERS['ADM1'] : USERS['U1S1'];
 
     setUser(targetUser);
     sessionStorage.setItem('bingo-user', JSON.stringify(targetUser));

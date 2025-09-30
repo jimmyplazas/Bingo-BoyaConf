@@ -19,12 +19,13 @@ export interface UserData {
 }
 
 export const USERS: Record<string, User> = {
-  'user-1': { uid: 'user-1', displayName: 'Alex Doe', email: 'alex@example.com', photoURL: 'https://picsum.photos/seed/user1/100/100', isAdmin: false },
-  'user-2': { uid: 'user-2', displayName: 'Beth Smith', email: 'beth@example.com', photoURL: 'https://picsum.photos/seed/user2/100/100', isAdmin: false },
-  'user-3': { uid: 'user-3', displayName: 'Charlie Brown', email: 'charlie@example.com', photoURL: 'https://picsum.photos/seed/user3/100/100', isAdmin: false },
-  'user-4': { uid: 'user-4', displayName: 'Diana Prince', email: 'diana@example.com', photoURL: 'https://picsum.photos/seed/user4/100/100', isAdmin: false },
-  'user-5': { uid: 'user-5', displayName: 'Ethan Hunt', email: 'ethan@example.com', photoURL: 'https://picsum.photos/seed/user5/100/100', isAdmin: false },
-  'admin-1': { uid: 'admin-1', displayName: 'Admin User', email: 'admin@example.com', photoURL: 'https://picsum.photos/seed/admin/100/100', isAdmin: true },
+  U1S1: { uid: 'U1S1', displayName: 'Alex Doe', email: 'alex@example.com', photoURL: 'https://picsum.photos/seed/user1/100/100', isAdmin: false },
+  U2S2: { uid: 'U2S2', displayName: 'Beth Smith', email: 'beth@example.com', photoURL: 'https://picsum.photos/seed/user2/100/100', isAdmin: false },
+  U3S3: { uid: 'U3S3', displayName: 'Charlie Brown', email: 'charlie@example.com', photoURL: 'https://picsum.photos/seed/user3/100/100', isAdmin: false },
+  U4S4: { uid: 'U4S4', displayName: 'Diana Prince', email: 'diana@example.com', photoURL: 'https://picsum.photos/seed/user4/100/100', isAdmin: false },
+  U5S5: { uid: 'U5S5', displayName: 'Ethan Hunt', email: 'ethan@example.com', photoURL: 'https://picsum.photos/seed/user5/100/100', isAdmin: false },
+  ADM1: { uid: 'ADM1', displayName: 'Admin User', email: 'admin@example.com', photoURL: 'https://picsum.photos/seed/admin/100/100', isAdmin: true },
+  ADM2: { uid: 'ADM2', displayName: 'Jimmy Ale', email: 'jimmyale3102@gmail.com', photoURL: 'https://picsum.photos/seed/admin2/100/100', isAdmin: true },
 };
 
 export const BOARDS: Record<string, Board> = {
@@ -53,6 +54,6 @@ export const BOARDS: Record<string, Board> = {
 };
 
 export const USER_DATA: Record<string, UserData> = {
-  'user-1': { uid: 'user-1', boardId: 'board-1', progress: Array(25).fill(false).map((_, i) => i === 12) },
-  'admin-1': { uid: 'admin-1', boardId: 'board-2', progress: Array(25).fill(false).map((_, i) => i === 12) },
+  U1S1: { uid: 'U1S1', boardId: 'board-1', progress: Array(25).fill(false).map((_, i) => i === 12) },
+  ADM1: { uid: 'ADM1', boardId: 'board-2', progress: Array(25).fill(false).map((_, i) => i === 12) },
 };

@@ -30,4 +30,4 @@ export function useBoard(boardId: string | null) {
     fetch();
   }, [boardId]);
 
-  return board;
+  return board};

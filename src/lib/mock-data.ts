@@ -33,22 +33,44 @@ export const BOARDS: Record<string, Board> = {
     id: 'board-1',
     name: 'Networking Novice',
     phrases: [
-      "Find someone who works in AI", "Meet a frontend developer", "Talk to a project manager", "Find a UX designer", "Chat with a backend engineer",
-      "Find someone from a startup", "Meet a person from a large tech company", "Talk to a student", "Find an event speaker", "Chat with a BoyaConf organizer",
-      "Ask about someone's favorite dev tool", "FREE SQUARE", "Discuss a recent tech trend", "Find someone with the same favorite programming language", "Get a career advice",
-      "Find someone who has contributed to open source", "Meet a person who traveled more than 5 hours to be here", "Talk to someone about their side project", "Find a person who is hiring", "Chat about a non-tech hobby",
-      "Find someone who is attending their first conference", "Meet a person with a cool sticker on their laptop", "Talk to someone from your city", "Find a remote worker", "Take a selfie with a new connection"
+      "Programa en Kotlin", "Prefiere backend que frontend", "Tiene stickers tech en su laptop", "Usa una camiseta de tecnología", "Usa Copilot en su trabajo",
+      "Ha contribuido a Open Source", "Hizo un nuevo amigo en BoyaConf", "Se unió a Discord de Boyacá Dev hoy", "PUNTO GANADO POR ASISTIR", "Conoció a alguien de otra ciudad",
+      "Viene de Chile", "Usa Linux", "Publicó una selfie con el hashtag #BoyaConf2025", "Tiene un curso online pendiente", "Viene de Sogamoso",
+      "Se llama igual que tú", "Tiene nivel de inglés C1", "Tiene sitio web personal", "Tiene una mascota", "Es desarrollador frontend",
+      "Ha tumbado producción", "Asistió a BoyaConf 2024", "Tiene más de 10 proyectos en GitHub", "Tiene más de 4 años de experiencia laboral", "Ha usado Docker"
     ],
   },
   'board-2': {
     id: 'board-2',
     name: 'Social Butterfly',
     phrases: [
-      "Talk to a data scientist", "Find a mobile developer", "Meet a DevOps engineer", "Chat with a technical writer", "Find someone working in security",
-      "Ask about someone's first computer", "Get a book recommendation", "Talk about a favorite podcast", "Find a person who plays a musical instrument", "Discuss a favorite movie",
-      "Find someone with a cool pet", "FREE SQUARE", "Chat with a person wearing a tech T-shirt", "Find someone who prefers tabs over spaces", "Meet a person who has published a blog post",
-      "Talk to someone who works on a product you use", "Find a person with the same birth month", "Chat about your dream travel destination", "Find a coffee enthusiast", "Meet someone who has run a marathon",
-      "Talk to a person from another country", "Find a night owl", "Get a restaurant recommendation", "Chat with an early bird", "Find a BoyaConf volunteer"
+      "Conoce qué es Continuous Delivery", "Tiene una foto con algún organizador", "Usa el IDE en Dark mode", "Tiene un Smartwatch", "Trabaja en una Startup",
+      "Usa un IDE de JetBrains", "Ha participado en alguna hackathon", "Le gusta leer", "Escucha música mientras programa", "Fan de anime o manga",
+      "Viene de Medellín", "Tiene 2 monitores en su setup", "Aprendió a programar en Java", "Se llama igual que tú", "Ha usado Gemini o Claude",
+      "Le gusta el Café", "Ha viajado a más de 2 países", "Hizo un nuevo amigo en BoyaConf", "Ha sido mentor", "Conoce qué es GraphQL",
+      "Mencionó a #BoyaConf2025 en una publicación hoy", "PUNTO GANADO POR ASISTIR", "Ha probado un framework nuevo este año", "Tiene una Mac", "Publicó una selfie con el hashtag #BoyaConf2025"
+    ],
+  },
+  'board-3': {
+    id: 'board-3',
+    name: 'Tech Explorer',
+    phrases: [
+      "Viene de Barranquilla", "Primera vez en BoyaConf", "Sabe el nombre de al menos un organizador", "Sigue a Boyacá Dev en alguna red social", "Asistió gracias a una beca",
+      "Publicó una selfie con el hashtag #BoyaConf2025", "Ha dado una charla", "Conoce qué es TDD", "Se llama igual que tú", "Tiene nivel de inglés B2",
+      "Estudia o es egresado de la UPTC", "Alguien que odia los lunes", "Publicó una historia en Instagram sobre el evento", "Ha usado IA para generar imágenes", "Conoció a un organizador hoy",
+      "Tiene un side project publicado", "Tiene una foto con algún ponente", "Ha jugado Mario Kart 64", "Tiene al menos una certificación en AWS, Azure o GCP", "PUNTO POR ASISTIR",
+      "Ha creado un GitHub Action", "Conoce qué es Clean Architecture", "No le gusta JS", "Hizo un nuevo amigo en BoyaConf", "Ha usado IA generativa en Producción"
+    ],
+  },
+  'board-4': {
+    id: 'board-4',
+    name: 'Geek Connector',
+    phrases: [
+      "Sabe qué es API REST", "Ha hecho freelancing", "Ha publicado una librería", "Ha usado Supabase", "Tiene un canal de YouTube tech",
+      "Prefiere programar en la madrugada", "Tiene más de 5 seguidores en GitHub", "Prefiere Light theme", "PUNTO GANADO POR ASISTIR", "Viene de Bogotá",
+      "Le apasiona enseñar", "Mencionó a #BoyaConf2025 en una publicación hoy", "Ha trabajado para una empresa internacional", "Ha hecho scraping web con Python", "Hizo un nuevo amigo en BoyaConf",
+      "Usa Windows", "Publicó una selfie con el hashtag #BoyaConf2025", "Ha usado n8n", "Ha hecho test de usabilidad", "Aprendió algo nuevo hoy",
+      "Ha probado Arduino", "Ha usado Firebase", "Usa Git todos los días", "Viene de Duitama", "Se llama igual que tú"
     ],
   },
 };

@@ -1,11 +1,8 @@
 runConfig:
-  cpu: 1
-  memoryMiB: 512
-  concurrency: 5
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=studio-7578052884-1f9a0.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=640465738383
-NEXT_PUBLIC_FIREBASE_APP_ID=1:640465738383:web:d2c31f026ec3411723eefa
+  cpu: 2
+  memoryMiB: 1024
+  concurrency: 10
+
 env:
 - variable: NEXT_PUBLIC_FIREBASE_API_KEY
   value: "AIzaSyB-EvG43CZdb8Kfb-iXW-m9eAkbUJpR2dI"
@@ -26,19 +23,19 @@ env:
     - RUNTIME
 
 - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-  value: "DEFAULT_STORAGE_BUCKET"
+  value: "studio-7578052884-1f9a0.firebasestorage.app"
   availability:
     - BUILD
     - RUNTIME
 
 - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-  value: "DEFAULT_MESSAGING_SENDER_ID"
+  value: "640465738383"
   availability:
     - BUILD
     - RUNTIME
 
 - variable: NEXT_PUBLIC_FIREBASE_APP_ID
-  value: "DEFAULT_APP_ID"
+  value: "1:640465738383:web:d2c31f026ec3411723eefa"
   availability:
     - BUILD
     - RUNTIME

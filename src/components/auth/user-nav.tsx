@@ -17,6 +17,7 @@ import { LogOut, User as UserIcon } from 'lucide-react';
 export function UserNav() {
   const { user, signOut } = useAuth();
 
+
   if (!user) {
     return null;
   }

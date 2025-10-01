@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { UserNav } from '@/components/auth/user-nav';
 import { AppIcon } from '@/components/icons';
@@ -6,7 +7,8 @@ import { useAuth } from '@/hooks/use-auth';
 import { Button } from '../ui/button';
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
@@ -16,14 +18,22 @@ export default function Header() {
             BoyaConf Bingo
           </span>
         </Link>
+
         <nav className="flex flex-1 items-center space-x-4">
-          {user?.isAdmin && (
+          {userData?.isAdmin && (
             <Button variant="ghost" asChild>
               <Link href="/admin">Admin Dashboard</Link>
             </Button>
           )}
         </nav>
+
         <div className="flex items-center justify-end space-x-4">
+          {userData?.shortId && (
+            <p className="text-base font-bold text-primary">
+              ID: {userData.shortId}
+            </p>
+          )}
+
           <UserNav />
         </div>
       </div>

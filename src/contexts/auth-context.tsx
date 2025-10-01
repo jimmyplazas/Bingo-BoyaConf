@@ -1,97 +1,153 @@
-'use client';
+"use client";
 
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { User as FirebaseUser } from 'firebase/auth';
-import { USERS, USER_DATA, User, UserData, BOARDS } from '@/lib/mock-data';
+import React, { createContext, useEffect, useState } from "react";
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut as firebaseSignOut,
+} from "firebase/auth";
+import {
+  doc,
+  onSnapshot,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  collection,
+} from "firebase/firestore";
+import { auth, googleProvider, db } from "@/lib/firebase";
+import type { UserData } from "@/lib/types";
 
-// This is a simplified mock of Firebase Auth.
-// In a real app, you would use the Firebase SDK.
-
-interface AuthContextType {
-  user: User | null;
+type AuthContextType = {
+  user: {
+    uid: string;
+    displayName?: string | null;
+    email?: string | null;
+    photoURL?: string | null;
+  } | null;
   userData: UserData | null;
   loading: boolean;
-  signInWithGoogle: () => void;
-  signOut: () => void;
-  updateUserProgress: (newProgress: boolean[]) => void;
-}
+  signInWithGoogle: () => Promise<void>;
+  signOut: () => Promise<void>;
+  updateUserProgress: (progress: boolean[]) => Promise<void>;
+};
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-// A mock user to simulate Google Sign-In
-const mockLoggedInUser = USERS['U1S1'];
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<AuthContextType["user"] | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking auth state on load
-    const sessionUser = sessionStorage.getItem('bingo-user');
-    if (sessionUser) {
-      const parsedUser = JSON.parse(sessionUser);
-      setUser(parsedUser);
-      loadUserData(parsedUser.uid);
-    }
-    setLoading(false);
+    let unsubscribeUserDoc: (() => void) | undefined = undefined;
+
+    const unsubAuth = onAuthStateChanged(auth, async (fbUser) => {
+      setLoading(true);
+      if (fbUser) {
+        const u = {
+          uid: fbUser.uid,
+          displayName: fbUser.displayName ?? null,
+          email: fbUser.email ?? null,
+          photoURL: fbUser.photoURL ?? null,
+        };
+        setUser(u);
+
+        try {
+          const userRef = doc(db, "users", u.uid);
+          const snap = await getDoc(userRef);
+
+          if (!snap.exists()) {
+            // 👉 primera vez: asignamos un board aleatorio
+            const boardsSnap = await getDocs(collection(db, "boards"));
+            const boardIds = boardsSnap.docs.map((d) => d.id);
+            const randomBoardId =
+              boardIds[Math.floor(Math.random() * boardIds.length)];
+
+            const shortId = u.uid.slice(-4); // 👈 shortId = últimos 4 caracteres del UID
+
+            await setDoc(userRef, {
+              uid: u.uid,
+              shortId,
+              displayName: u.displayName,
+              email: u.email,
+              photoURL: u.photoURL,
+              isAdmin: false,
+              boardId: randomBoardId,
+              progress: Array(25).fill(false),
+            });
+          }
+
+          unsubscribeUserDoc = onSnapshot(
+            userRef,
+            (docSnap) => {
+              if (docSnap.exists()) {
+                setUserData(docSnap.data() as UserData);
+              } else {
+                setUserData(null);
+              }
+              setLoading(false);
+            },
+            (err) => {
+              console.error("onSnapshot user doc error:", err);
+              setLoading(false);
+            }
+          );
+        } catch (err) {
+          console.error("Error en asignación de board:", err);
+          setLoading(false);
+        }
+      } else {
+        setUser(null);
+        setUserData(null);
+        if (unsubscribeUserDoc) unsubscribeUserDoc();
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      unsubAuth();
+      if (unsubscribeUserDoc) unsubscribeUserDoc();
+    };
   }, []);
 
-  const loadUserData = (uid: string) => {
-    // Simulate fetching user data from a database
-    let gameData = USER_DATA[uid];
-    if (!gameData) {
-      // New user, assign a random board
-      const boardIds = Object.keys(BOARDS);
-      const randomBoardId = boardIds[Math.floor(Math.random() * boardIds.length)];
-      const initialProgress = Array(25).fill(false);
-      // Center square is free
-      initialProgress[12] = true;
-      gameData = { uid, boardId: randomBoardId, progress: initialProgress };
-      USER_DATA[uid] = gameData; // "Save" to our mock DB
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error("signInWithGoogle error:", err);
+      throw err;
     }
-    setUserData(gameData);
-    sessionStorage.setItem('bingo-user-data', JSON.stringify(gameData));
-  };
-  
-  const signInWithGoogle = () => {
-    setLoading(true);
-    // In a real app, this would be:
-    // signInWithPopup(auth, googleProvider).then(result => ...);
-    
-    // For now, we'll just set a mock user.
-    // Let's allow switching between a normal user and an admin user for testing.
-    const currentUser = sessionStorage.getItem('bingo-user');
-    const targetUser = currentUser && JSON.parse(currentUser).uid === 'U1S1' ? USERS['ADM1'] : USERS['U1S1'];
-
-    setUser(targetUser);
-    sessionStorage.setItem('bingo-user', JSON.stringify(targetUser));
-    loadUserData(targetUser.uid);
-    setLoading(false);
   };
 
-  const signOut = () => {
-    setLoading(true);
-    setUser(null);
-    setUserData(null);
-    sessionStorage.removeItem('bingo-user');
-    sessionStorage.removeItem('bingo-user-data');
-    setLoading(false);
-  };
-
-  const updateUserProgress = (newProgress: boolean[]) => {
-    if (userData) {
-      const newUserData = { ...userData, progress: newProgress };
-      setUserData(newUserData);
-      sessionStorage.setItem('bingo-user-data', JSON.stringify(newUserData));
-      // Also update our mock "DB"
-      USER_DATA[userData.uid] = newUserData;
+  const signOut = async () => {
+    try {
+      await firebaseSignOut(auth);
+    } catch (err) {
+      console.error("signOut error:", err);
     }
+  };
+
+  const updateUserProgress = async (progress: boolean[]) => {
+    if (!user) return;
+    const ref = doc(db, "users", user.uid);
+    await updateDoc(ref, { progress });
   };
 
   return (
-    <AuthContext.Provider value={{ user, userData, loading, signInWithGoogle, signOut, updateUserProgress }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userData,
+        loading,
+        signInWithGoogle,
+        signOut,
+        updateUserProgress,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-};
+}
